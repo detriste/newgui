@@ -1,0 +1,32 @@
+/* topbar.css */
+.topbar-root {
+  flex-grow: 1;
+}
+
+.topbar-appbar {
+  background-color: #1976d2; /* azul saúde */
+}
+
+.topbar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-title {
+  flex-grow: 1;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: white;
+}
+
+.topbar-switch-label {
+  color: white;
+}
+
+.topbar-account-icon {
+  margin-left: 8px;
+  color: white;
+  cursor: pointer;
+}
