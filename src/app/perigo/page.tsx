@@ -1,84 +1,65 @@
 "use client";
 import * as React from "react";
-import { Box, Typography, Paper, List, ListItem, Divider } from "@mui/material";
-import Topbar from "../component/Topbar"; // ajuste o caminho se necessário
+import { Box, Typography, Paper, List, ListItem } from "@mui/material";
+import Topbar from "../component/Topbar";
 
-const perigosVacinas = [
+const perigosNaoVacinacao = [
   {
-    perigo: "Efeitos colaterais comuns",
-    detalhe:
-      "Dor, inchaço e vermelhidão no local da injeção, febre baixa, mal-estar, dor de cabeça e dores musculares. Geralmente são leves e passam em 1 a 3 dias.",
+    doenca: "Sarampo",
+    perigo:
+      "Doença altamente contagiosa que pode causar complicações graves como pneumonia, encefalite e até morte, principalmente em crianças pequenas.",
   },
   {
-    perigo: "Reações alérgicas raras",
-    detalhe:
-      "Reações anafiláticas são muito raras e podem ser tratadas rapidamente. Pessoas com alergia grave a componentes da vacina devem consultar um médico.",
+    doenca: "Poliomielite",
+    perigo:
+      "Pode causar paralisia permanente e morte. Graças à vacinação, foi erradicada no Brasil, mas ainda existe o risco de reintrodução.",
   },
   {
-    perigo: "Reações sistêmicas temporárias",
-    detalhe:
-      "Febre, cansaço, dores musculares e gastrointestinais que ocorrem em poucos dias e indicam a resposta do sistema imunológico.",
+    doenca: "Coqueluche",
+    perigo:
+      "Tosse intensa que pode durar meses, levando a complicações respiratórias graves, especialmente perigosa para bebês menores de 1 ano.",
   },
   {
-    perigo: "Contraindicações específicas",
-    detalhe:
-      "Pessoas com histórico de reação grave a vacinas específicas devem buscar orientação médica antes da vacinação.",
+    doenca: "Difteria",
+    perigo:
+      "Infecção bacteriana grave que pode obstruir as vias respiratórias e afetar o coração e sistema nervoso, podendo ser fatal.",
   },
   {
-    perigo: "Raríssimos eventos adversos graves",
-    detalhe:
-      "Eventos graves, como trombose com trombocitopenia, são extremamente raros e monitorados por órgãos de saúde. Os benefícios da vacinação superam em muito os riscos.",
+    doenca: "Meningite",
+    perigo:
+      "Inflamação das meninges que pode causar sequelas neurológicas permanentes, amputações e morte em poucas horas.",
+  },
+  {
+    doenca: "Rubéola",
+    perigo:
+      "Causa sérios defeitos congênitos se contraída durante a gravidez, incluindo surdez, problemas cardíacos e atraso mental.",
   },
 ];
 
-export default function PerigosVacinas() {
+export default function PerigosNaoVacinacao() {
   return (
     <>
       <Topbar />
-      <Box
-        sx={{
-          p: 4,
-          maxWidth: 800,
-          margin: "auto",
-          background: "linear-gradient(135deg, #f9f9f9 0%, #e0e0e0 100%)",
-          borderRadius: 3,
-          boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)",
-          mt: 4,
-        }}
-      >
+
+      <Box sx={{ p: 3, maxWidth: 700, margin: "auto" }}>
         <Typography
           variant="h4"
-          align="center"
           gutterBottom
-          sx={{ fontWeight: "bold", color: "#f9f9f9" }}
+          sx={{ fontWeight: "bold", textAlign: "center" }}
         >
-          Perigos e Efeitos Colaterais das Vacinas
+          Perigos da Não Vacinação
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          sx={{ mb: 4, color: "#f9f9f9", fontStyle: "italic" }}
-        >
-          Informações importantes para entender os riscos e cuidados
-        </Typography>
-
         <List>
-          {perigosVacinas.map(({ perigo, detalhe }, index) => (
-            <ListItem key={index} sx={{ mb: 2 }}>
-              <Paper
-                elevation={3}
-                sx={{
-                  p: 3,
-                  backgroundColor: "#fff",
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#b00020" }}>
-                  {perigo}
+          {perigosNaoVacinacao.map(({ doenca, perigo }, i) => (
+            <ListItem key={i} sx={{ mb: 2 }}>
+              <Paper sx={{ p: 2, width: "100%" }} elevation={3}>
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#d32f2f", fontWeight: "bold" }}
+                >
+                  ⚠️ {doenca}
                 </Typography>
-                <Divider sx={{ mb: 1, mt: 1 }} />
-                <Typography variant="body1">{detalhe}</Typography>
+                <Typography sx={{ mt: 1 }}>{perigo}</Typography>
               </Paper>
             </ListItem>
           ))}
@@ -87,4 +68,3 @@ export default function PerigosVacinas() {
     </>
   );
 }
-
