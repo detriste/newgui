@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Box, Typography, Paper, Grid, Divider } from "@mui/material";
+import { Box, Typography, Paper, Divider } from "@mui/material";
 
 const dadosPocos = [
   {
@@ -29,65 +29,69 @@ export default function PocosMariliaPompeia() {
         background: "linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%)",
         borderRadius: 3,
         boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 2,
+        justifyContent: "center",
       }}
     >
       <Typography
         variant="h4"
         align="center"
         gutterBottom
-        sx={{ fontWeight: "bold", color: "#0d3b66" }}
+        sx={{ fontWeight: "bold", color: "#0d3b66", width: "100%" }}
       >
         Poços de Água de Marília e Pompeia
       </Typography>
       <Typography
         variant="subtitle1"
         align="center"
-        sx={{ mb: 4, color: "#669bbc", fontStyle: "italic" }}
+        sx={{ mb: 4, color: "#669bbc", fontStyle: "italic", width: "100%" }}
       >
         Informações técnicas e características dos poços
       </Typography>
 
-      <Grid container spacing={4}>
-        {dadosPocos.map(({ cidade, descricao, abastecimento, pH }, index) => (
-          <Grid item xs={12} md={6} key={cidade}>
-            <Paper
-              elevation={6}
-              sx={{
-                p: 3,
-                backgroundColor: "#fff",
-                borderLeft: `8px solid ${index === 0 ? "#0d3b66" : "#f95738"}`,
-                borderRadius: 2,
-                height: "100%",
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  color: index === 0 ? "#0d3b66" : "#f95738",
-                  fontWeight: "bold",
-                }}
-                gutterBottom
-              >
-                {cidade}
-              </Typography>
-              <Divider sx={{ mb: 2 }} />
-              <Typography variant="body1" sx={{ mb: 2 }}>
-                {descricao}
-              </Typography>
-              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                Fonte de Abastecimento:
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                {abastecimento}
-              </Typography>
-              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                pH:
-              </Typography>
-              <Typography variant="body2">{pH}</Typography>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
+      {dadosPocos.map(({ cidade, descricao, abastecimento, pH }, index) => (
+        <Box
+          key={cidade}
+          sx={{
+            flex: "1 1 45%",
+            minWidth: 300,
+            backgroundColor: "#fff",
+            p: 3,
+            borderLeft: `8px solid ${index === 0 ? "#0d3b66" : "#f95738"}`,
+            borderRadius: 2,
+            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              color: index === 0 ? "#0d3b66" : "#f95738",
+              fontWeight: "bold",
+            }}
+            gutterBottom
+          >
+            {cidade}
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            {descricao}
+          </Typography>
+          <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            Fonte de Abastecimento:
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 1 }}>
+            {abastecimento}
+          </Typography>
+          <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            pH:
+          </Typography>
+          <Typography variant="body2">{pH}</Typography>
+        </Box>
+      ))}
     </Box>
   );
 }
