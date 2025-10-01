@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Box, Typography, Paper, List, ListItem } from "@mui/material";
-import styles from "../style/mitos.module.css"
+
 
 const mitosVacinas = [
   {

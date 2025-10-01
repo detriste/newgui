@@ -27,17 +27,7 @@ const vacinas: Vacina[] = [
 ];
 
 export default function CalendarioVacinal() {
-  const [value, setValue] = React.useState<Date | null>(hoje);
-
-  const handleChange = (date: Date | Date[] | null) => {
-    if (date instanceof Date) {
-      setValue(date);
-    } else if (Array.isArray(date) && date.length > 0) {
-      setValue(date[0]);
-    } else {
-      setValue(null);
-    }
-  };
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(hoje);
 
   const getVacinasPorData = (date: Date | null): string[] => {
     if (!date) return [];
@@ -90,14 +80,18 @@ export default function CalendarioVacinal() {
       <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", textAlign: "center" }}>
         Calendário Vacinal
       </Typography>
-      <Calendar onChange={handleChange} value={value} tileContent={tileContent} />
+      <Calendar
+        value={selectedDate}
+        onClickDay={(date) => setSelectedDate(date)}
+        tileContent={tileContent}
+      />
       <Box sx={{ mt: 3 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-          Vacinas no dia selecionado ({value ? value.toLocaleDateString() : "Nenhuma data selecionada"}):
+          Vacinas no dia selecionado ({selectedDate ? selectedDate.toLocaleDateString() : "Nenhuma data selecionada"}):
         </Typography>
         <List>
-          {getVacinasPorData(value).length > 0 ? (
-            getVacinasPorData(value).map((nome, i) => <ListItem key={i}>{nome}</ListItem>)
+          {getVacinasPorData(selectedDate).length > 0 ? (
+            getVacinasPorData(selectedDate).map((nome, i) => <ListItem key={i}>{nome}</ListItem>)
           ) : (
             <ListItem>Nenhuma vacina agendada para esta data.</ListItem>
           )}
