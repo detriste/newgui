@@ -1,408 +1,324 @@
 "use client";
 import * as React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  Button,
-  Stack,
-  Paper,
-  Avatar,
-  Chip,
-  IconButton,
-} from "@mui/material";
-import {
-  Menu,
-  Vaccines,
-  CalendarMonth,
-  LocationOn,
-  Warning,
-  FactCheck,
-  TrendingUp,
-  HealthAndSafety,
-  Shield,
-  Science,
-  People,
-  LocalHospital,
-  ArrowForward,
-} from "@mui/icons-material";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Coronavirus from "@mui/icons-material/Coronavirus";
+import Home from "@mui/icons-material/Home";
+import FactCheck from "@mui/icons-material/FactCheck";
+import CalendarMonth from "@mui/icons-material/CalendarMonth";
+import LocationOn from "@mui/icons-material/LocationOn";
+import Warning from "@mui/icons-material/Warning";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 
 export default function Topbar() {
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const router = useRouter();
 
-  const features = [
-    {
-      icon: <FactCheck sx={{ fontSize: 48 }} />,
-      title: "Mitos e Verdades",
-      description: "Informações baseadas em ciência para esclarecer dúvidas sobre vacinas",
-      color: "#1976D2",
-      path: "/mitos",
-    },
-    {
-      icon: <CalendarMonth sx={{ fontSize: 48 }} />,
-      title: "Calendário Vacinal",
-      description: "Acompanhe todas as vacinas e suas datas recomendadas",
-      color: "#2E7D32",
-      path: "/calendario",
-    },
-    {
-      icon: <LocationOn sx={{ fontSize: 48 }} />,
-      title: "Postos Próximos",
-      description: "Encontre postos de vacinação perto de você",
-      color: "#ED6C02",
-      path: "/postos",
-    },
-    {
-      icon: <Warning sx={{ fontSize: 48 }} />,
-      title: "Informações Importantes",
-      description: "Conheça os riscos da não vacinação e proteja sua família",
-      color: "#D32F2F",
-      path: "/perigo",
-    },
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+  const menuItems = [
+    { text: "Início", icon: <Home />, path: "/" },
+    { text: "Mitos e Verdades", icon: <FactCheck />, path: "/mitos" },
+    { text: "Calendário Vacinal", icon: <CalendarMonth />, path: "/calendario" },
+    { text: "Postos Próximos", icon: <LocationOn />, path: "/postos" },
+    { text: "Informações Importantes", icon: <Warning />, path: "/perigo" },
   ];
 
-  const stats = [
-    { icon: <People />, value: "95%", label: "Cobertura Vacinal Recomendada" },
-    { icon: <Shield />, value: "20+", label: "Doenças Prevenidas" },
-    { icon: <LocalHospital />, value: "100%", label: "Gratuito no SUS" },
-  ];
-
-  return (
-    <>
-      {/* 🔹 Topbar de Navegação */}
-      <AppBar position="sticky" sx={{ bgcolor: "#0D47A1" }}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box display="flex" alignItems="center" sx={{ cursor: "pointer" }} onClick={() => router.push("/")}>
-            <Vaccines sx={{ mr: 1 }} />
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              Portal de Vacinas
-            </Typography>
-          </Box>
-          <Stack direction="row" spacing={3}>
-            <Button color="inherit" onClick={() => router.push("/")}>Início</Button>
-            <Button color="inherit" onClick={() => router.push("/calendario")}>Calendário</Button>
-            <Button color="inherit" onClick={() => router.push("/postos")}>Postos</Button>
-            <Button color="inherit" onClick={() => router.push("/mitos")}>Mitos</Button>
-            <Button color="inherit" onClick={() => router.push("/perigo")}>Importante</Button>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-
-      {/* 🔹 Hero Section */}
+  const drawerContent = (
+    <Box
+      sx={{
+        width: 280,
+        height: "100%",
+        background: "linear-gradient(180deg, #0D47A1 0%, #1565C0 100%)",
+        color: "white",
+      }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
       <Box
         sx={{
-          background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1976D2 100%)",
-          color: "white",
-          py: 12,
-          position: "relative",
-          overflow: "hidden",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background:
-              "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
-          },
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          py: 4,
+          px: 2,
+          background: "rgba(255, 255, 255, 0.1)",
+          backdropFilter: "blur(10px)",
         }}
       >
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
-          <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={7}>
-              <Chip
-                label="🏥 Sistema Público de Saúde"
-                sx={{
-                  mb: 3,
-                  bgcolor: "rgba(255, 255, 255, 0.2)",
-                  color: "white",
-                  fontWeight: 600,
-                  backdropFilter: "blur(10px)",
-                }}
-              />
-              <Typography
-                variant="h2"
-                sx={{
-                  fontWeight: 900,
-                  mb: 3,
-                  fontSize: { xs: "2.5rem", md: "3.5rem" },
-                  lineHeight: 1.2,
-                }}
-              >
-                Proteja sua família com
-                <Box component="span" sx={{ color: "#B3E5FC", display: "block" }}>
-                  Vacinação Segura
-                </Box>
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  mb: 4,
-                  opacity: 0.95,
-                  lineHeight: 1.7,
-                  maxWidth: 600,
-                }}
-              >
-                Acesso rápido a informações confiáveis sobre vacinas, calendário de
-                vacinação e postos de saúde próximos a você.
-              </Typography>
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={() => router.push("/calendario")}
-                  endIcon={<ArrowForward />}
-                  sx={{
-                    bgcolor: "white",
-                    color: "#0D47A1",
-                    px: 4,
-                    py: 1.5,
-                    fontSize: "1.1rem",
-                    fontWeight: 700,
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-                    "&:hover": {
-                      bgcolor: "#F5F5F5",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 12px 32px rgba(0, 0, 0, 0.2)",
-                    },
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  Ver Calendário
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  onClick={() => router.push("/postos")}
-                  sx={{
-                    borderColor: "white",
-                    color: "white",
-                    px: 4,
-                    py: 1.5,
-                    fontSize: "1.1rem",
-                    fontWeight: 700,
-                    borderWidth: 2,
-                    "&:hover": {
-                      borderWidth: 2,
-                      bgcolor: "rgba(255, 255, 255, 0.1)",
-                      borderColor: "white",
-                    },
-                  }}
-                >
-                  Postos Próximos
-                </Button>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Box
-                sx={{
-                  position: "relative",
-                  display: { xs: "none", md: "block" },
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 400,
-                    height: 400,
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backdropFilter: "blur(20px)",
-                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
-                  }}
-                >
-                  <Vaccines sx={{ fontSize: 200, opacity: 0.9 }} />
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
+        <Avatar
+          sx={{
+            bgcolor: "#2196F3",
+            width: 72,
+            height: 72,
+            mb: 2,
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+          }}
+        >
+          <Coronavirus sx={{ fontSize: 40 }} />
+        </Avatar>
+        <Typography variant="h6" sx={{ fontWeight: 700, textAlign: "center" }}>
+          Sistema de Vacinas
+        </Typography>
+        <Typography variant="caption" sx={{ opacity: 0.8, mt: 0.5 }}>
+          Informação e Saúde
+        </Typography>
       </Box>
 
-      {/* 🔹 Stats Section */}
-      <Container maxWidth="lg" sx={{ mt: -6, position: "relative", zIndex: 2 }}>
-        <Grid container spacing={3}>
-          {stats.map((stat, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Paper
-                elevation={4}
-                sx={{
-                  p: 4,
-                  textAlign: "center",
-                  borderRadius: 3,
-                  background: "white",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-8px)",
-                    boxShadow: "0 12px 32px rgba(13, 71, 161, 0.2)",
-                  },
+      <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.2)", my: 2 }} />
+
+      <List sx={{ px: 1 }}>
+        {menuItems.map((item) => (
+          <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
+            <ListItemButton
+              onClick={() => router.push(item.path)}
+              sx={{
+                borderRadius: 2,
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  bgcolor: "rgba(255, 255, 255, 0.15)",
+                  transform: "translateX(8px)",
+                },
+                py: 1.5,
+              }}
+            >
+              <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                  fontSize: "0.95rem",
                 }}
-              >
-                <Avatar
-                  sx={{
-                    bgcolor: "#1976D2",
-                    width: 64,
-                    height: 64,
-                    mx: "auto",
-                    mb: 2,
-                  }}
-                >
-                  {stat.icon}
-                </Avatar>
-                <Typography
-                  variant="h3"
-                  sx={{ fontWeight: 900, color: "#0D47A1", mb: 1 }}
-                >
-                  {stat.value}
-                </Typography>
-                <Typography variant="body1" sx={{ color: "#546E7A", fontWeight: 500 }}>
-                  {stat.label}
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
 
-      {/* 🔹 Features Section */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Box sx={{ textAlign: "center", mb: 8 }}>
-          <Typography variant="h3" sx={{ fontWeight: 800, color: "#0D47A1", mb: 2 }}>
-            Tudo o que você precisa saber
-          </Typography>
-          <Typography variant="h6" sx={{ color: "#546E7A", maxWidth: 700, mx: "auto" }}>
-            Informações completas e confiáveis sobre vacinação ao seu alcance
-          </Typography>
-        </Box>
-
-        <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card
-                elevation={3}
-                sx={{
-                  height: "100%",
-                  borderRadius: 4,
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                  "&:hover": {
-                    transform: "translateY(-12px)",
-                    boxShadow: `0 16px 40px ${feature.color}40`,
-                  },
-                }}
-                onClick={() => router.push(feature.path)}
-              >
-                <CardContent sx={{ p: 4, textAlign: "center" }}>
-                  <Avatar
-                    sx={{
-                      bgcolor: feature.color,
-                      width: 80,
-                      height: 80,
-                      mx: "auto",
-                      mb: 3,
-                      boxShadow: `0 8px 24px ${feature.color}40`,
-                    }}
-                  >
-                    {feature.icon}
-                  </Avatar>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: 700, mb: 2, color: "#263238" }}
-                  >
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "#546E7A", lineHeight: 1.6 }}>
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      {/* 🔹 CTA Section */}
       <Box
         sx={{
-          background: "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
-          py: 8,
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          p: 2,
+          background: "rgba(0, 0, 0, 0.2)",
         }}
       >
-        <Container maxWidth="md">
-          <Paper
-            elevation={6}
-            sx={{
-              p: 6,
-              textAlign: "center",
-              borderRadius: 4,
-              background: "white",
-            }}
-          >
-            <HealthAndSafety sx={{ fontSize: 72, color: "#1976D2", mb: 3 }} />
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 800,
-                color: "#0D47A1",
-                mb: 2,
-              }}
-            >
-              A vacinação salva vidas
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "#546E7A",
-                mb: 4,
-                lineHeight: 1.7,
-              }}
-            >
-              Proteja você e sua comunidade. Mantenha seu cartão de vacinação em dia e
-              contribua para um futuro mais saudável para todos.
-            </Typography>
-            <Button
-              variant="contained"
+        <Typography variant="caption" sx={{ opacity: 0.7, display: "block" }}>
+          Versão 1.0.0
+        </Typography>
+        <Typography variant="caption" sx={{ opacity: 0.7 }}>
+          © 2025 Sistema de Vacinas
+        </Typography>
+      </Box>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1, mb: 3 }}>
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          background: "linear-gradient(90deg, #0D47A1 0%, #1976D2 100%)",
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar sx={{ py: 1 }}>
+            <IconButton
               size="large"
-              onClick={() => router.push("/mitos")}
-              endIcon={<Science />}
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
               sx={{
-                bgcolor: "#1976D2",
-                px: 6,
-                py: 2,
-                fontSize: "1.1rem",
-                fontWeight: 700,
-                boxShadow: "0 8px 24px rgba(25, 118, 210, 0.3)",
+                mr: 2,
+                bgcolor: "rgba(255, 255, 255, 0.1)",
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  bgcolor: "#0D47A1",
+                  bgcolor: "rgba(255, 255, 255, 0.2)",
+                  transform: "rotate(90deg)",
                 },
               }}
             >
-              Conheça os Fatos
-            </Button>
-          </Paper>
-        </Container>
-      </Box>
+              <MenuIcon />
+            </IconButton>
 
-      {/* 🔹 Footer */}
-      <Box sx={{ bgcolor: "#0D47A1", color: "white", py: 4, textAlign: "center" }}>
-        <Container maxWidth="lg">
-          <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            © 2025 Portal de Vacinas - Informação e Saúde para Todos
-          </Typography>
-          <Typography variant="caption" sx={{ opacity: 0.6, display: "block", mt: 1 }}>
-            Todas as informações são baseadas em evidências científicas
-          </Typography>
+            <Coronavirus sx={{ mr: 2, fontSize: 32 }} />
+
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  color: "#B3E5FC",
+                  transform: "scale(1.02)",
+                },
+              }}
+              onClick={() => router.push("/")}
+            >
+              Portal de Vacinas
+            </Typography>
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={auth}
+                  onChange={handleChange}
+                  sx={{
+                    "& .MuiSwitch-switchBase.Mui-checked": {
+                      color: "#B3E5FC",
+                    },
+                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                      backgroundColor: "#4FC3F7",
+                    },
+                  }}
+                />
+              }
+              label={
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                  {auth ? "Online" : "Offline"}
+                </Typography>
+              }
+              sx={{ mr: 2 }}
+            />
+
+            {auth && (
+              <Tooltip title="Perfil do Usuário" arrow>
+                <IconButton
+                  size="large"
+                  onClick={handleMenu}
+                  color="inherit"
+                  sx={{
+                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      bgcolor: "rgba(255, 255, 255, 0.2)",
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+            )}
+
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              PaperProps={{
+                sx: {
+                  mt: 1.5,
+                  borderRadius: 2,
+                  minWidth: 180,
+                  boxShadow: "0 4px 20px rgba(13, 71, 161, 0.2)",
+                },
+              }}
+            >
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "#E3F2FD",
+                  },
+                }}
+              >
+                Meu Perfil
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "#E3F2FD",
+                  },
+                }}
+              >
+                Configurações
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setAuth(false);
+                }}
+                sx={{
+                  color: "#D32F2F",
+                  "&:hover": {
+                    bgcolor: "#FFEBEE",
+                  },
+                }}
+              >
+                Sair
+              </MenuItem>
+            </Menu>
+          </Toolbar>
         </Container>
-      </Box>
-    </>
+      </AppBar>
+
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        {drawerContent}
+      </Drawer>
+    </Box>
   );
 }
