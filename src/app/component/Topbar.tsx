@@ -1,9 +1,11 @@
 "use client";
 import * as React from "react";
 import {
+  AppBar,
+  Toolbar,
+  Typography,
   Box,
   Container,
-  Typography,
   Grid,
   Card,
   CardContent,
@@ -12,13 +14,16 @@ import {
   Paper,
   Avatar,
   Chip,
+  IconButton,
 } from "@mui/material";
 import {
+  Menu,
   Vaccines,
   CalendarMonth,
   LocationOn,
   Warning,
   FactCheck,
+  TrendingUp,
   HealthAndSafety,
   Shield,
   Science,
@@ -35,8 +40,7 @@ export default function Topbar() {
     {
       icon: <FactCheck sx={{ fontSize: 48 }} />,
       title: "Mitos e Verdades",
-      description:
-        "Informações baseadas em ciência para esclarecer dúvidas sobre vacinas",
+      description: "Informações baseadas em ciência para esclarecer dúvidas sobre vacinas",
       color: "#1976D2",
       path: "/mitos",
     },
@@ -57,8 +61,7 @@ export default function Topbar() {
     {
       icon: <Warning sx={{ fontSize: 48 }} />,
       title: "Informações Importantes",
-      description:
-        "Conheça os riscos da não vacinação e proteja sua família",
+      description: "Conheça os riscos da não vacinação e proteja sua família",
       color: "#D32F2F",
       path: "/perigo",
     },
@@ -72,351 +75,333 @@ export default function Topbar() {
 
   return (
     <>
-      {/* === CONTAINER PRINCIPAL === */}
+      {/* 🔹 Topbar de Navegação */}
+      <AppBar position="sticky" sx={{ bgcolor: "#0D47A1" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box display="flex" alignItems="center" sx={{ cursor: "pointer" }} onClick={() => router.push("/")}>
+            <Vaccines sx={{ mr: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              Portal de Vacinas
+            </Typography>
+          </Box>
+          <Stack direction="row" spacing={3}>
+            <Button color="inherit" onClick={() => router.push("/")}>Início</Button>
+            <Button color="inherit" onClick={() => router.push("/calendario")}>Calendário</Button>
+            <Button color="inherit" onClick={() => router.push("/postos")}>Postos</Button>
+            <Button color="inherit" onClick={() => router.push("/mitos")}>Mitos</Button>
+            <Button color="inherit" onClick={() => router.push("/perigo")}>Importante</Button>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+
+      {/* 🔹 Hero Section */}
       <Box
         sx={{
-          minHeight: "100vh",
-          background:
-            "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%)",
+          background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1976D2 100%)",
+          color: "white",
+          py: 12,
+          position: "relative",
+          overflow: "hidden",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background:
+              "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
+          },
         }}
       >
-        {/* Hero Section */}
-        <Box
-          sx={{
-            background:
-              "linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1976D2 100%)",
-            color: "white",
-            py: 12,
-            position: "relative",
-            overflow: "hidden",
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background:
-                "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
-            },
-          }}
-        >
-          <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
-            <Grid container spacing={6} alignItems="center">
-              <Grid >
-                <Chip
-                  label="🏥 Sistema Público de Saúde"
-                  sx={{
-                    mb: 3,
-                    bgcolor: "rgba(255, 255, 255, 0.2)",
-                    color: "white",
-                    fontWeight: 600,
-                    backdropFilter: "blur(10px)",
-                  }}
-                />
-                <Typography
-                  variant="h2"
-                  sx={{
-                    fontWeight: 900,
-                    mb: 3,
-                    fontSize: { xs: "2.5rem", md: "3.5rem" },
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Proteja sua família com
-                  <Box component="span" sx={{ color: "#B3E5FC", display: "block" }}>
-                    Vacinação Segura
-                  </Box>
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 4,
-                    opacity: 0.95,
-                    lineHeight: 1.7,
-                    maxWidth: 600,
-                  }}
-                >
-                  Acesso rápido a informações confiáveis sobre vacinas, calendário de
-                  vacinação e postos de saúde próximos a você.
-                </Typography>
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={() => router.push("/calendario")}
-                    endIcon={<ArrowForward />}
-                    sx={{
-                      bgcolor: "white",
-                      color: "#0D47A1",
-                      px: 4,
-                      py: 1.5,
-                      fontSize: "1.1rem",
-                      fontWeight: 700,
-                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-                      "&:hover": {
-                        bgcolor: "#F5F5F5",
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 12px 32px rgba(0, 0, 0, 0.2)",
-                      },
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    Ver Calendário
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    onClick={() => router.push("/postos")}
-                    sx={{
-                      borderColor: "white",
-                      color: "white",
-                      px: 4,
-                      py: 1.5,
-                      fontSize: "1.1rem",
-                      fontWeight: 700,
-                      borderWidth: 2,
-                      "&:hover": {
-                        borderWidth: 2,
-                        bgcolor: "rgba(255, 255, 255, 0.1)",
-                        borderColor: "white",
-                      },
-                    }}
-                  >
-                    Postos Próximos
-                  </Button>
-                </Stack>
-              </Grid>
-              <Grid >
-                <Box
-                  sx={{
-                    position: "relative",
-                    display: { xs: "none", md: "block" },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: 400,
-                      height: 400,
-                      bgcolor: "rgba(255, 255, 255, 0.1)",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backdropFilter: "blur(20px)",
-                      boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
-                    }}
-                  >
-                    <Vaccines sx={{ fontSize: 200, opacity: 0.9 }} />
-                  </Box>
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+          <Grid container spacing={6} alignItems="center">
+            <Grid item xs={12} md={7}>
+              <Chip
+                label="🏥 Sistema Público de Saúde"
+                sx={{
+                  mb: 3,
+                  bgcolor: "rgba(255, 255, 255, 0.2)",
+                  color: "white",
+                  fontWeight: 600,
+                  backdropFilter: "blur(10px)",
+                }}
+              />
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 900,
+                  mb: 3,
+                  fontSize: { xs: "2.5rem", md: "3.5rem" },
+                  lineHeight: 1.2,
+                }}
+              >
+                Proteja sua família com
+                <Box component="span" sx={{ color: "#B3E5FC", display: "block" }}>
+                  Vacinação Segura
                 </Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </Box>
-
-        {/* Stats Section */}
-        <Container maxWidth="lg" sx={{ mt: -6, position: "relative", zIndex: 2 }}>
-          <Grid container spacing={3}>
-            {stats.map((stat, index) => (
-              <Grid >
-                <Paper
-                  elevation={4}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: 4,
+                  opacity: 0.95,
+                  lineHeight: 1.7,
+                  maxWidth: 600,
+                }}
+              >
+                Acesso rápido a informações confiáveis sobre vacinas, calendário de
+                vacinação e postos de saúde próximos a você.
+              </Typography>
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={() => router.push("/calendario")}
+                  endIcon={<ArrowForward />}
                   sx={{
-                    p: 4,
-                    textAlign: "center",
-                    borderRadius: 3,
-                    background: "white",
-                    transition: "all 0.3s ease",
+                    bgcolor: "white",
+                    color: "#0D47A1",
+                    px: 4,
+                    py: 1.5,
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
                     "&:hover": {
-                      transform: "translateY(-8px)",
-                      boxShadow: "0 12px 32px rgba(13, 71, 161, 0.2)",
+                      bgcolor: "#F5F5F5",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 12px 32px rgba(0, 0, 0, 0.2)",
+                    },
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  Ver Calendário
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={() => router.push("/postos")}
+                  sx={{
+                    borderColor: "white",
+                    color: "white",
+                    px: 4,
+                    py: 1.5,
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    borderWidth: 2,
+                    "&:hover": {
+                      borderWidth: 2,
+                      bgcolor: "rgba(255, 255, 255, 0.1)",
+                      borderColor: "white",
                     },
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      bgcolor: "#1976D2",
-                      width: 64,
-                      height: 64,
-                      mx: "auto",
-                      mb: 2,
-                    }}
-                  >
-                    {stat.icon}
-                  </Avatar>
-                  <Typography
-                    variant="h3"
-                    sx={{ fontWeight: 900, color: "#0D47A1", mb: 1 }}
-                  >
-                    {stat.value}
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: "#546E7A", fontWeight: 500 }}>
-                    {stat.label}
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
+                  Postos Próximos
+                </Button>
+              </Stack>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Box
+                sx={{
+                  position: "relative",
+                  display: { xs: "none", md: "block" },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 400,
+                    height: 400,
+                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backdropFilter: "blur(20px)",
+                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
+                  }}
+                >
+                  <Vaccines sx={{ fontSize: 200, opacity: 0.9 }} />
+                </Box>
+              </Box>
+            </Grid>
           </Grid>
         </Container>
+      </Box>
 
-        {/* Features Section */}
-        <Container maxWidth="lg" sx={{ py: 10 }}>
-          <Box sx={{ textAlign: "center", mb: 8 }}>
+      {/* 🔹 Stats Section */}
+      <Container maxWidth="lg" sx={{ mt: -6, position: "relative", zIndex: 2 }}>
+        <Grid container spacing={3}>
+          {stats.map((stat, index) => (
+            <Grid item xs={12} md={4} key={index}>
+              <Paper
+                elevation={4}
+                sx={{
+                  p: 4,
+                  textAlign: "center",
+                  borderRadius: 3,
+                  background: "white",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-8px)",
+                    boxShadow: "0 12px 32px rgba(13, 71, 161, 0.2)",
+                  },
+                }}
+              >
+                <Avatar
+                  sx={{
+                    bgcolor: "#1976D2",
+                    width: 64,
+                    height: 64,
+                    mx: "auto",
+                    mb: 2,
+                  }}
+                >
+                  {stat.icon}
+                </Avatar>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 900, color: "#0D47A1", mb: 1 }}
+                >
+                  {stat.value}
+                </Typography>
+                <Typography variant="body1" sx={{ color: "#546E7A", fontWeight: 500 }}>
+                  {stat.label}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* 🔹 Features Section */}
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Box sx={{ textAlign: "center", mb: 8 }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, color: "#0D47A1", mb: 2 }}>
+            Tudo o que você precisa saber
+          </Typography>
+          <Typography variant="h6" sx={{ color: "#546E7A", maxWidth: 700, mx: "auto" }}>
+            Informações completas e confiáveis sobre vacinação ao seu alcance
+          </Typography>
+        </Box>
+
+        <Grid container spacing={4}>
+          {features.map((feature, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: "100%",
+                  borderRadius: 4,
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "translateY(-12px)",
+                    boxShadow: `0 16px 40px ${feature.color}40`,
+                  },
+                }}
+                onClick={() => router.push(feature.path)}
+              >
+                <CardContent sx={{ p: 4, textAlign: "center" }}>
+                  <Avatar
+                    sx={{
+                      bgcolor: feature.color,
+                      width: 80,
+                      height: 80,
+                      mx: "auto",
+                      mb: 3,
+                      boxShadow: `0 8px 24px ${feature.color}40`,
+                    }}
+                  >
+                    {feature.icon}
+                  </Avatar>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, mb: 2, color: "#263238" }}
+                  >
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "#546E7A", lineHeight: 1.6 }}>
+                    {feature.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* 🔹 CTA Section */}
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
+          py: 8,
+        }}
+      >
+        <Container maxWidth="md">
+          <Paper
+            elevation={6}
+            sx={{
+              p: 6,
+              textAlign: "center",
+              borderRadius: 4,
+              background: "white",
+            }}
+          >
+            <HealthAndSafety sx={{ fontSize: 72, color: "#1976D2", mb: 3 }} />
             <Typography
-              variant="h3"
+              variant="h4"
               sx={{
                 fontWeight: 800,
                 color: "#0D47A1",
                 mb: 2,
               }}
             >
-              Tudo o que você precisa saber
-            </Typography>
-            <Typography variant="h6" sx={{ color: "#546E7A", maxWidth: 700, mx: "auto" }}>
-              Informações completas e confiáveis sobre vacinação ao seu alcance
-            </Typography>
-          </Box>
-
-          <Grid container spacing={4}>
-            {features.map((feature, index) => (
-              <Grid>
-                <Card
-                  elevation={3}
-                  sx={{
-                    height: "100%",
-                    borderRadius: 4,
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                    "&:hover": {
-                      transform: "translateY(-12px)",
-                      boxShadow: `0 16px 40px ${feature.color}40`,
-                    },
-                  }}
-                  onClick={() => router.push(feature.path)}
-                >
-                  <CardContent sx={{ p: 4, textAlign: "center" }}>
-                    <Avatar
-                      sx={{
-                        bgcolor: feature.color,
-                        width: 80,
-                        height: 80,
-                        mx: "auto",
-                        mb: 3,
-                        boxShadow: `0 8px 24px ${feature.color}40`,
-                      }}
-                    >
-                      {feature.icon}
-                    </Avatar>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 700,
-                        mb: 2,
-                        color: "#263238",
-                      }}
-                    >
-                      {feature.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#546E7A",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {feature.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-
-        {/* CTA Section */}
-        <Box
-          sx={{
-            background: "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
-            py: 8,
-          }}
-        >
-          <Container maxWidth="md">
-            <Paper
-              elevation={6}
-              sx={{
-                p: 6,
-                textAlign: "center",
-                borderRadius: 4,
-                background: "white",
-              }}
-            >
-              <HealthAndSafety sx={{ fontSize: 72, color: "#1976D2", mb: 3 }} />
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 800,
-                  color: "#0D47A1",
-                  mb: 2,
-                }}
-              >
-                A vacinação salva vidas
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: "#546E7A",
-                  mb: 4,
-                  lineHeight: 1.7,
-                }}
-              >
-                Proteja você e sua comunidade. Mantenha seu cartão de vacinação em dia e
-                contribua para um futuro mais saudável para todos.
-              </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => router.push("/mitos")}
-                endIcon={<Science />}
-                sx={{
-                  bgcolor: "#1976D2",
-                  px: 6,
-                  py: 2,
-                  fontSize: "1.1rem",
-                  fontWeight: 700,
-                  boxShadow: "0 8px 24px rgba(25, 118, 210, 0.3)",
-                  "&:hover": {
-                    bgcolor: "#0D47A1",
-                  },
-                }}
-              >
-                Conheça os Fatos
-              </Button>
-            </Paper>
-          </Container>
-        </Box>
-
-        {/* Footer */}
-        <Box
-          sx={{
-            bgcolor: "#0D47A1",
-            color: "white",
-            py: 4,
-            textAlign: "center",
-          }}
-        >
-          <Container maxWidth="lg">
-            <Typography variant="body2" sx={{ opacity: 0.8 }}>
-              © 2025 Portal de Vacinas - Informação e Saúde para Todos
+              A vacinação salva vidas
             </Typography>
             <Typography
-              variant="caption"
-              sx={{ opacity: 0.6, display: "block", mt: 1 }}
+              variant="h6"
+              sx={{
+                color: "#546E7A",
+                mb: 4,
+                lineHeight: 1.7,
+              }}
             >
-              Todas as informações são baseadas em evidências científicas
+              Proteja você e sua comunidade. Mantenha seu cartão de vacinação em dia e
+              contribua para um futuro mais saudável para todos.
             </Typography>
-          </Container>
-        </Box>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => router.push("/mitos")}
+              endIcon={<Science />}
+              sx={{
+                bgcolor: "#1976D2",
+                px: 6,
+                py: 2,
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                boxShadow: "0 8px 24px rgba(25, 118, 210, 0.3)",
+                "&:hover": {
+                  bgcolor: "#0D47A1",
+                },
+              }}
+            >
+              Conheça os Fatos
+            </Button>
+          </Paper>
+        </Container>
+      </Box>
+
+      {/* 🔹 Footer */}
+      <Box sx={{ bgcolor: "#0D47A1", color: "white", py: 4, textAlign: "center" }}>
+        <Container maxWidth="lg">
+          <Typography variant="body2" sx={{ opacity: 0.8 }}>
+            © 2025 Portal de Vacinas - Informação e Saúde para Todos
+          </Typography>
+          <Typography variant="caption" sx={{ opacity: 0.6, display: "block", mt: 1 }}>
+            Todas as informações são baseadas em evidências científicas
+          </Typography>
+        </Container>
       </Box>
     </>
   );
